@@ -33,7 +33,7 @@ public class CalculateUtils {
 
 
     /**
-     * 第一个说大数且多于第二个数返回true
+     * 第一个数字大于第二个数返回true
      *
      * @param var1
      * @param var2
@@ -122,6 +122,6 @@ public class CalculateUtils {
 
 
     public static void main(String[] args) {
-        System.out.println("------------》"+amplitude(514.02,485.97));
+        System.out.println("------------》"+compareTo(-5,-4));
     }
 }

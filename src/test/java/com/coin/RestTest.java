@@ -52,20 +52,47 @@ public class RestTest {
 		}
 	}
 
+    /**
+     * 测试获取ZB最新市场配置数据
+     */
+    @Test
+    public void testMarkets() {
+        try {
+            // 请求地址
+            String url = API_DOMAIN + "/data/v1/markets";
+            log.info("-markets url: " + url);
+            // 请求测试
+            String callback = get(url, "UTF-8");
+         /*   JSONObject json = JSONObject.parseObject(callback);
+            System.out.println(json.getTimestamp("date"));
+            JSONObject list = json.getJSONObject("ticker");
+            System.out.println(list.getBigDecimal("vol"));*/
+
+            log.info("-testTicker 结果: " + callback);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
 
 	/**
 	 * 测试获取行情
 	 */
-//	@Test
+	@Test
 	public void testTicker() {
 		try {
-			String currency = "ltc_btc";
+			String currency = "xrp_usdt";
 			// 请求地址
 			String url = API_DOMAIN + "/data/v1/ticker?market=" + currency;
 			log.info(currency + "-testTicker url: " + url);
 			// 请求测试
 			String callback = get(url, "UTF-8");
-			log.info(currency + "-testTicker 结果: " + callback);
+			JSONObject json = JSONObject.parseObject(callback);
+           System.out.println(json.getTimestamp("date"));
+            JSONObject list = json.getJSONObject("ticker");
+            System.out.println(list.getBigDecimal("vol"));
+
+            log.info(currency + "-testTicker 结果: " + callback);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

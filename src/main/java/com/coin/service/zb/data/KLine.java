@@ -36,6 +36,7 @@ public class KLine {
      */
     public void pulledUp(String currency) {
         StringBuffer message = new StringBuffer("建议关注："+separator);
+
         //1分钟发送信息
         message.append(getSidewaysBy1Min(currency));
         //3分钟发送信息
@@ -115,63 +116,7 @@ public class KLine {
         return sideways(currency, "6hour", time, 3, 3);
     }
 
-    public Map getSideways(String currency){
-        Map rest = new HashMap();
 
-        StringBuffer message = new StringBuffer();
-        boolean one = false;
-
-        long time = DateUtil.getBeforeNHourTimeInMillis(1);
-        JSONObject obj = data.getKline(currency, "1min", time);
-        String list = obj.get("data").toString();
-        JSONArray jlist = JSONObject.parseArray(list);
-        //获取一分钟数据，并判断幅度是否大于1
-        JSONArray job1 = (JSONArray) jlist.get(1);
-        Double open1 = job1.getDoubleValue(1);
-        Double close1 = job1.getDoubleValue(4);
-        double percentage1 = CalculateUtils.amplitude(open1, close1);
-        boolean one1 = CalculateUtils.compareTo(percentage1, 5);
-        if(one1){
-            one =true;
-            message.append("在" + date + "时候的" + currency + "币在最近1分钟" + message + percentage1 + separator);
-
-        }
-        //获取第三分钟数据，并判断幅度是否大于1
-        JSONArray job3 = (JSONArray) jlist.get(3);
-        Double open3 = job3.getDoubleValue(1);
-        double percentage3 = CalculateUtils.amplitude(open3, close1);
-        boolean one3 = CalculateUtils.compareTo(percentage3, 5);
-        if(one1){
-            one =true;
-            message.append("在" + date + "时候的" + currency + "币在最近1分钟" + message + percentage1 + separator);
-
-        }
-        //获取第五分钟数据，并判断幅度是否大于1
-        JSONArray job5 = (JSONArray) jlist.get(5);
-        Double open5 = job5.getDoubleValue(1);
-        double percentage5 = CalculateUtils.amplitude(open5, close1);
-        boolean one5 = CalculateUtils.compareTo(percentage5, 5);
-        if(one5){
-            one =true;
-            message.append("在" + date + "时候的" + currency + "币在最近1分钟" + message + percentage1 + separator);
-
-        }
-        if (i == 3) {//三分钟涨幅在5个点
-            double percentage = CalculateUtils.amplitude(open, close);
-            message.append("在" + date + "时候的" + currency + "币在最近1分钟" + message + percentage + separator);
-        }
-        if (i == 5) {
-
-        }
-        JSONArray job1 = (JSONArray) jlist.get(0);
-        Timestamp date=job1.getTimestamp(0);
-
-        if (one) {
-            rest.put("isSendEmail", one);
-            rest.put("content", message.append("建议关注"+separator).toString());
-        }
-        return rest;
-    }*/
     /**
      * 获取1小时的振幅在5个点，
      *
@@ -179,7 +124,7 @@ public class KLine {
      * @return
      */
     /*public String getSidewaysBy4Hour(String currency) {
-        return this.getSideways(currency, "4hour", 12, 5);
+        return this.get1KSideways(currency, "4hour", 12, 5);
     }*/
     /**
      * 获取1小时的振幅在10个点，
@@ -188,7 +133,7 @@ public class KLine {
      * @return
      */
     public String getSidewaysBy1Hour(String currency) {
-        return this.getSideways(currency, "1hour", 3, 10);
+        return this.get1KSideways(currency, "1hour", 3, 10);
     }
 
     /**
@@ -198,7 +143,7 @@ public class KLine {
      * @return
      */
   /*  public String getSidewaysBy30Min(String currency) {
-        return this.getSideways(currency, "30min", 1, 5);
+        return this.get1KSideways(currency, "30min", 1, 5);
     }*/
 
     /**
@@ -208,7 +153,7 @@ public class KLine {
      * @return
      */
     public String getSidewaysBy15Min(String currency) {
-        return this.getSideways(currency, "15min", 1, 5);
+        return this.get1KSideways(currency, "15min", 1, 5);
     }
 
     /**
@@ -218,7 +163,7 @@ public class KLine {
      * @return
      */
     public String getSidewaysBy5Min(String currency) {
-        return this.getSideways(currency, "5min", 1, 5);
+        return this.get1KSideways(currency, "5min", 1, 5);
     }
 
     /**
@@ -228,7 +173,7 @@ public class KLine {
      * @return
      */
     /*public String getSidewaysBy3Min(String currency) {
-        return this.getSideways(currency, "3min", 1, 5);
+        return this.get1KSideways(currency, "3min", 1, 5);
     }*/
 
     /**
@@ -238,7 +183,7 @@ public class KLine {
      * @return
      */
     public String getSidewaysBy1Min(String currency) {
-        return this.getSideways(currency, "1min", 1, 3);
+        return this.get1KSideways(currency, "1min", 1, 3);
     }
 
     /**
@@ -250,7 +195,7 @@ public class KLine {
      * @param amplitude 幅度
      * @return
      */
-    public String getSideways(String currency, String type, int n, int amplitude) {
+    public String get1KSideways(String currency, String type, int n, int amplitude) {
         StringBuffer message = new StringBuffer();
         long time = DateUtil.getBeforeNHourTimeInMillis(n);
         JSONObject obj = data.getKline(currency, type, time);
@@ -265,6 +210,53 @@ public class KLine {
 
 
         double percentage = CalculateUtils.amplitude(close,open );
+        boolean flag = CalculateUtils.compareTo(percentage, amplitude);
+        log.info(currency +":"+type+":"+percentage+"是否发送:"+flag);
+
+        if (flag) {
+            Timestamp tempTimestamp = timestampMap.get(type);
+            if (tempTimestamp == null || timestamp.after(tempTimestamp)) {//第一次进来发送信息，第二次时间必须大于当前时间+1min
+                message.append("在" + timestamp + "时候的" + type+ "分钟K线在的振幅是" + percentage + separator);
+                String tempType="";
+                if(type.contains("min")){
+                    tempType= type.substring(0, type.indexOf("m"));
+                }else{
+                    tempType= type.substring(0, type.indexOf("h"));
+                }
+                tempTimestamp = DateUtil.getAfterNMinuteTimestamp(timestamp, Integer.valueOf(tempType));
+                timestampMap.put(type, tempTimestamp);
+            }
+        }
+        return message.toString();
+    }
+
+    /**
+     * 获取给定货币给定周期，给定获取数据的振幅
+     *
+     * @param currency  币种
+     * @param type      周期
+     * @param n         获取几个小时前的数据
+     * @param amplitude 幅度
+     * @return
+     */
+    public String get2KSideways(String currency, String type, int n, int amplitude) {
+        StringBuffer message = new StringBuffer();
+        long time = DateUtil.getBeforeNHourTimeInMillis(n);
+        JSONObject obj = data.getKline(currency, type, time);
+        String list = obj.get("data").toString();
+        JSONArray jlist = JSONObject.parseArray(list);
+        //1、获取最近的1根K线
+        JSONArray lastOne = jlist.getJSONArray(jlist.size() - 1);
+        Timestamp timestamp = lastOne.getTimestamp(0);//获取时间戳
+        Double openOne = lastOne.getDoubleValue(1);//获取开盘价
+        Double closeOne = lastOne.getDoubleValue(4);//获取收盘价
+        //2、获取最近的2根K线
+        JSONArray lastTwo = jlist.getJSONArray(jlist.size() - 1);
+       // Timestamp timestamp = lastTwo.getTimestamp(0);//获取时间戳
+        Double openTwo = lastTwo.getDoubleValue(1);//获取开盘价
+        Double closeTwo = lastTwo.getDoubleValue(4);//获取收盘价
+
+        double percentage = CalculateUtils.amplitude(openOne,closeOne );
         boolean flag = CalculateUtils.compareTo(percentage, amplitude);
         log.info(currency +":"+type+":"+percentage+"是否发送:"+flag);
 
