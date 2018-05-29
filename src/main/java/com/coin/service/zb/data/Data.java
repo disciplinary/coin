@@ -1,7 +1,9 @@
 package com.coin.service.zb.data;
 
 import com.alibaba.fastjson.JSONObject;
+import com.coin.utils.DateUtil;
 import org.apache.log4j.Logger;
+import org.junit.jupiter.api.Test;
 import org.springframework.stereotype.Repository;
 
 import java.io.BufferedReader;
@@ -117,12 +119,14 @@ public class Data {
     }
 
     /**
-     * 获取K线数据
+     * 获取K线数据 [1513779360000,41.31,41.37,41.01,41.15,702.60]
      */
-//	@Test
-    public JSONObject getKline(String  currency ,String type ,Long since  ) {
+
+	//@Test
+    public  JSONObject getKline(String  currency ,String type ,Long since  ) {
         JSONObject json=null;
         try {
+
             Thread.sleep(1000);
             String url = API_DOMAIN + "/data/v1/kline?market=" + currency + "&type="+type+"&size=1000&since="+since;
             //log.info(currency + "-testKline url: " + url);
@@ -135,4 +139,9 @@ public class Data {
         return json;
     }
 
+    public static void main(String[] args) {
+	     Data a =new Data();
+     long   since = DateUtil.getBeforeNHourTimeInMillis(1);
+       System.out.println( a.getKline("etc_usdt","1min",since));
+    }
 }
