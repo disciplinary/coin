@@ -1,6 +1,7 @@
 package com.fcoin.api.client.impl;
 
-import com.fcoin.api.client.FcoinApiRestClient;
+import com.coin.exchange.fcoin.FcoinApiRestClient;
+import com.coin.exchange.fcoin.impl.FcoinApiRestClientImpl;
 import com.fcoin.api.client.domain.*;
 import com.fcoin.api.client.domain.enums.*;
 import lombok.extern.slf4j.Slf4j;
@@ -8,9 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
-import java.util.Properties;
 import java.util.Set;
 
 /**

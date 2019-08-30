@@ -1,8 +1,8 @@
 package com.fcoin.api.client.impl;
 
-import com.coin.fcoin.api.client.impl.FcoinApiWebSocketClientImpl;
-import com.fcoin.api.client.domain.enums.DepthLevel;
-import com.fcoin.api.client.domain.enums.Resolution;
+import com.coin.exchange.fcoin.impl.FcoinApiWebSocketClientImpl;
+import com.coin.exchange.fcoin.domain.enums.DepthLevel;
+import com.coin.exchange.fcoin.domain.enums.Resolution;
 import org.junit.After;
 import org.junit.Test;
 
