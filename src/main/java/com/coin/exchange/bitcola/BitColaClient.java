@@ -1,10 +1,7 @@
 package com.coin.exchange.bitcola;
 
 import com.coin.exchange.Consts;
-import com.coin.exchange.bitcola.domain.Depth;
-import com.coin.exchange.bitcola.domain.Depth;
-import com.coin.exchange.bitcola.domain.Symbol;
-import com.coin.exchange.bitcola.domain.Trade;
+import com.coin.exchange.bitcola.domain.*;
 import com.coin.exchange.bitcola.domain.resp.RespBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -13,6 +10,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -33,27 +31,30 @@ public interface BitColaClient {
     @GET("api/market/timestamp")
     Call<RespBody<Long>> serverTime();
     /**
-     * 获取交易对说明
+     * 获取支持的交易对
      * @return
      */
     @GET("api/market/config")
-    Call<RespBody<Set<Symbol>>> symbols();
+    Call<RespBody<Set<BitcolaPair>>> pairs();
 
     /**
      * 获取深度
-     * @param level
-     * @param pair
+     * @param pair 交易对
+     * @param size
+     * @param merge
      * @return
      */
 
-    Call<RespBody<Depth>> depth(@Path("level") String level, @Path("pair") String pair);
+    Call<RespBody<BitcolaDepth>> depth(String pair, int size, int merge);
 
     /**
      * 查询历史交易记录
+     * @param pair 必填
+     * @param size  Default 20，Max 100
      * @return
      */
     @GET("/api/market/trades")
-    Call<RespBody<Long>>  getTrades( @Path("pair") String pair);
+    Call<RespBody<BitcolaTrade>>  getTrades(String pair, int size);
 
 
     /**
@@ -62,7 +63,7 @@ public interface BitColaClient {
      */
     @Headers(Consts.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
     @GET("/api/trade/getAccountInfo")
-    Call<RespBody<Long>>  getAccount();
+    Call<RespBody<List<BitcolaAsset>>>  getAccount();
 
     /**
      * 下单
@@ -75,7 +76,7 @@ public interface BitColaClient {
      */
     @Headers(Consts.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
     @GET("/api/trade/order")
-    Call<RespBody<Long>>  placeOrder(String pair, String type, String direction, BigDecimal price, BigDecimal amount);
+    Call<RespBody<String>>  placeOrder(String pair, String type, String direction, BigDecimal price, BigDecimal amount);
 
     /**
      * 根据id撤销订单
@@ -84,7 +85,7 @@ public interface BitColaClient {
      */
     @Headers(Consts.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
     @GET("/api/trade/cancelOrder")
-    Call<RespBody<Long>> cancelOrder(@Query("id")String id);
+    Call<RespBody<String>> cancelOrder(String id);
 
     /**
      * 根据id查询订单
@@ -93,7 +94,7 @@ public interface BitColaClient {
      */
     @Headers(Consts.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
     @GET("/api/trade/getOrder")
-    Call<RespBody<Set<Trade>>> getOrder(@Query("id")String id);
+    Call<RespBody<Set<BicolaOrder>>> getOrder(String id);
 
     /**
      * 查询订单
@@ -106,6 +107,6 @@ public interface BitColaClient {
      */
     @Headers(Consts.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
     @GET("api/trade/getOrders")
-    Call<RespBody<Set<Trade>>> getOrders(@Query("pair")String symbol,@Query("status")String status,@Query("direction")String direction,@Query("type")String type,@Query("page")  Integer page);
+    Call<RespBody<List<BicolaOrder>>> getOrders(@Query("pair")String symbol, @Query("status")String status, @Query("direction")String direction, @Query("type")String type, @Query("page")  Integer page);
 
 }

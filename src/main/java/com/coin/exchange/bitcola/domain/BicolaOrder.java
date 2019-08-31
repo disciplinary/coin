@@ -1,4 +1,4 @@
-package com.coin.facade.response;
+package com.coin.exchange.bitcola.domain;
 
 import com.coin.exchange.bitcola.domain.enums.OrderDirection;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,7 +7,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-public class Order {
+public class BicolaOrder {
     private long id;
     private String pair;
     private OrderDirection direction;

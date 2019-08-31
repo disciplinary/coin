@@ -1,4 +1,4 @@
-package com.coin.exchange.fcoin.domain.reqs;
+package com.coin.facade.request;
 
 import lombok.Data;
 import lombok.Getter;
@@ -10,8 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Data
-public class PlaceOrderRequest {
-
+public class BuyOrder {
    private String pair;
    private String price;
    private String type;

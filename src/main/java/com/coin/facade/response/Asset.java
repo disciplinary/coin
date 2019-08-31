@@ -1,20 +1,20 @@
 package com.coin.facade.response;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
 import java.math.BigDecimal;
 
 /**
  * created by jacky. 2018/7/23 3:28 PM
  */
-@Getter
-@Setter
+@Data
 public class Asset {
-    private String category;
+    @JsonProperty("coinCode")
     private String currency;
     private BigDecimal balance;
     private BigDecimal available;
     private BigDecimal frozen;
+    private int unitDecimal;
 
 }

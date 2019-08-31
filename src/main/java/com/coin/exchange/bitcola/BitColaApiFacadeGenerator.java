@@ -17,9 +17,19 @@ import retrofit2.Response;
 public class BitColaApiFacadeGenerator extends ApiFacadeGenerator {
     private static String apiKey= "cd28a3456e877930dfd91713";
     private static String apiSecret = "4045c030224941ed9397de861088305a1e56a84c" ;
+    //host地址
     private static String baseUrl="https://api.bitcola.io";
+    //实例化兰拦截器
     private static Interceptor interceptor = new BitColaInterceptor(apiKey,apiSecret);
+    //正确的状态
     private static String  status="1000";
+
+    /**
+     * 创建
+     * @param serviceClass
+     * @param <S>
+     * @return
+     */
     public  <S> S createService(Class<S> serviceClass) {
         return createService(serviceClass, interceptor,baseUrl);
     }

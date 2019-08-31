@@ -2,10 +2,11 @@ package com.coin.exchange;
 
 import com.alibaba.fastjson.JSON;
 import com.coin.exchange.bitcola.BitColaApiFacadeImpl;
-import com.coin.exchange.bitcola.domain.Symbol;
-import com.coin.exchange.bitcola.domain.Trade;
 import com.coin.facade.ApiFacade;
 
+import com.coin.facade.request.PlaceOrder;
+import com.coin.facade.response.Pair;
+import com.coin.facade.response.Trade;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,8 +48,8 @@ public class BitColaApiClientImplTest {
 
     @Test
     public void symbols() {
-        Set<Symbol> symbolsList = client.symbols();
-        for(Symbol symbol  :symbolsList  ){
+        Set<Pair> symbolsList = client.pairs();
+        for(Pair symbol  :symbolsList  ){
             log.info(JSON.toJSONString(symbol));
         }
     }
@@ -60,7 +61,11 @@ public class BitColaApiClientImplTest {
 
     @Test
     public void buy() {
-      String a = client.buy("HA_USDT",new BigDecimal(20),new BigDecimal(20));
+        PlaceOrder placeOrder = new PlaceOrder ();
+        placeOrder.setPair("HA_USDT");
+        placeOrder.setAmount(new BigDecimal(20));
+        placeOrder.setPrice(new BigDecimal(20));
+      String a = client.buy(placeOrder);
         log.info(JSON.toJSONString(a));
     }
 

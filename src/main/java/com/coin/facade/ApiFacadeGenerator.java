@@ -19,6 +19,14 @@ public abstract class ApiFacadeGenerator {
 
     static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
+    /**
+     * 获取对象
+     * @param serviceClass
+     * @param interceptor
+     * @param baseUrl
+     * @param <S>
+     * @return
+     */
     protected <S> S createService(Class<S> serviceClass, Interceptor interceptor, String baseUrl) {
 
         if (!httpClient.interceptors().contains(interceptor)) {
@@ -30,7 +38,12 @@ public abstract class ApiFacadeGenerator {
         return retrofit.create(serviceClass);
     }
 
-
+    /**
+     * 执行同步请求
+     * @param call
+     * @param <T>
+     * @return
+     */
     public <T> T executeSync(Call<T> call) {
 
         try {

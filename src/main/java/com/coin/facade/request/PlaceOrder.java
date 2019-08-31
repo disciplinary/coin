@@ -1,8 +1,10 @@
-package com.coin.exchange.fcoin.domain.reqs;
+package com.coin.facade.request;
 
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.math.BigDecimal;
 
 /**
  * created by jacky. 2018/8/3 3:09 PM
@@ -10,10 +12,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Data
-public class PlaceOrderRequest {
+public class PlaceOrder{
 
    private String pair;
-   private String price;
+   private BigDecimal price;
    private String type;
-   private String amount;
+   private BigDecimal amount;
 }

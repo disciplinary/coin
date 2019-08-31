@@ -1,13 +1,10 @@
 package com.coin.facade;
 
-
-
-
-import com.coin.exchange.bitcola.domain.Depth;
-import com.coin.exchange.bitcola.domain.Symbol;
-import com.coin.exchange.bitcola.domain.Ticker;
-import com.coin.exchange.bitcola.domain.Trade;
-import com.coin.facade.request.DepthLevel;
+import com.coin.facade.request.PlaceOrder;
+import com.coin.facade.response.Depth;
+import com.coin.facade.response.Pair;
+import com.coin.facade.response.Ticker;
+import com.coin.facade.response.Trade;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -30,7 +27,7 @@ public interface ApiFacade {
      * 获取支持的交易对
      * @return
      */
-    Set<Symbol> symbols();
+    Set<Pair> pairs();
     /**
      * 获取市场当前行情
      *
@@ -43,7 +40,7 @@ public interface ApiFacade {
      *
      * @return
      */
-    Depth depth(DepthLevel level, String symbol);
+   //Depth depth(DepthLevel level, String symbol);
 
     /**
      * 获取交易所交易历史
@@ -65,22 +62,18 @@ public interface ApiFacade {
 
     /**
      * 买入下单
-     * @param symbol
-     * @param price
-     * @param amount
+     * @param placeOrder 订单信息
      * @return 订单 ID
      */
 
-    String buy(String symbol,BigDecimal price,BigDecimal amount);
+    String buy(PlaceOrder placeOrder);
 
     /**
      * ,卖出下单
-     * @param symbol 交易对
-     * @param price 价格
-     * @param amount 数量
+     * @param placeOrder 订单信息
      * @return 订单 ID
      */
-    String sell(String symbol,BigDecimal price,BigDecimal amount);
+    String sell(PlaceOrder placeOrder);
     /**
      * 取消委托
      * @return
