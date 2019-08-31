@@ -1,6 +1,5 @@
 package com.coin.exchange.fcoin.exception;
 
-import com.coin.exchange.fcoin.domain.enums.ErrorCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,11 +25,6 @@ public class ApiException extends RuntimeException {
         errMsg = message;
     }
 
-    public ApiException(ErrorCode errorCode) {
-        super(errorCode.getMessage());
-        errMsg = errorCode.getMessage();
-        errCode = String.valueOf(errorCode.getCode());
-    }
 
     public ApiException(String message) {
         super(message);

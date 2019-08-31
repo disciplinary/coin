@@ -1,10 +1,11 @@
 package com.coin.exchange.bitcola;
 
+import com.coin.exchange.Consts;
 import com.coin.exchange.bitcola.domain.Depth;
-import com.coin.fcoin.api.client.constant.Consts;
-import com.coin.fcoin.api.client.domain.Symbol;
-import com.coin.fcoin.api.client.domain.Trade;
-import com.coin.fcoin.api.client.domain.resp.RespBody;
+import com.coin.exchange.bitcola.domain.Depth;
+import com.coin.exchange.bitcola.domain.Symbol;
+import com.coin.exchange.bitcola.domain.Trade;
+import com.coin.exchange.bitcola.domain.resp.RespBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;

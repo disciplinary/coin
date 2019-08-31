@@ -1,6 +1,6 @@
 package com.coin.scheduler;
 
-import com.coin.service.zb.data.KLine;
+import com.coin.exchange.zb.data.KLine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

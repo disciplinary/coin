@@ -1,10 +1,11 @@
 package com.coin.exchange;
 
 import com.alibaba.fastjson.JSON;
-import com.coin.common.ApiFacade;
-import com.coin.exchange.bitcola.domain.BitColaApiFacadeImpl;
-import com.coin.fcoin.api.client.domain.Symbol;
-import com.coin.fcoin.api.client.domain.Trade;
+import com.coin.exchange.bitcola.BitColaApiFacadeImpl;
+import com.coin.exchange.bitcola.domain.Symbol;
+import com.coin.exchange.bitcola.domain.Trade;
+import com.coin.facade.ApiFacade;
+
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;

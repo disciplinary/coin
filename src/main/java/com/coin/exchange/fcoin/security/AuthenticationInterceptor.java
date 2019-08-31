@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.coin.exchange.fcoin.constant.Consts;
 import okhttp3.*;
 import okio.Buffer;
-import org.apache.commons.lang3.StringUtils;
+import org.junit.platform.commons.util.StringUtils;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -135,7 +135,7 @@ public class AuthenticationInterceptor implements Interceptor {
             joiner.add(key + '=' + urlEncode(value));
         }
         //追加问号
-        if (!StringUtils.isEmpty(joiner.toString())) {
+        if (!StringUtils.isBlank(joiner.toString())) {
             sb.append("?");
         }
         sb.append(joiner.toString()).append(ts.toString());

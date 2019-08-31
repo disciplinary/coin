@@ -1,6 +1,6 @@
 package com.coin.exchange.bitcola;
 
-import com.coin.fcoin.api.client.constant.Consts;
+import com.coin.exchange.Consts;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.*;

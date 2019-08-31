@@ -1,12 +1,13 @@
 package com.coin.exchange.bitcola;
 
-import com.coin.common.ApiFacade;
-import com.coin.fcoin.api.client.domain.Depth;
-import com.coin.fcoin.api.client.domain.Symbol;
-import com.coin.fcoin.api.client.domain.Ticker;
-import com.coin.fcoin.api.client.domain.Trade;
-import com.coin.fcoin.api.client.domain.enums.DepthLevel;
-import com.coin.fcoin.api.client.domain.reqs.PlaceOrderRequest;
+import com.coin.exchange.bitcola.domain.Depth;
+import com.coin.exchange.bitcola.domain.Symbol;
+import com.coin.exchange.bitcola.domain.Ticker;
+import com.coin.exchange.bitcola.domain.Trade;
+import com.coin.exchange.fcoin.domain.reqs.PlaceOrderRequest;
+import com.coin.facade.ApiFacade;
+
+import com.coin.facade.request.DepthLevel;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -47,13 +48,14 @@ public class BitColaApiFacadeImpl implements ApiFacade {
     }
 
     @Override
-    public Set<Trade> trades(String pair,String status,String direction,String type,int page) {
-        return  bitColaApiFacadeGenerator.executeSync(service.trades(pair,status,direction,type,page)).getData();
+    public Set<Trade> trades(String pair, String status, String direction, String type, int page) {
+        // bitColaApiFacadeGenerator.executeSync(service.getOrders(pair,status,direction,type,page)).getData()
+        return  null;
     }
 
     @Override
     public String buy(String symbol, BigDecimal price, BigDecimal amount) {
-        PlaceOrderRequest  PlaceOrderRequest =new PlaceOrderRequest();
+        PlaceOrderRequest PlaceOrderRequest =new PlaceOrderRequest();
         PlaceOrderRequest.setAmount("101");
         PlaceOrderRequest.setSide("buy");
         PlaceOrderRequest.setPrice("0.02");

@@ -1,4 +1,4 @@
-package com.coin.exchange.fcoin.domain.enums;
+package com.coin.facade.request;
 
 import com.coin.exchange.fcoin.exception.ApiException;
 import lombok.AllArgsConstructor;
