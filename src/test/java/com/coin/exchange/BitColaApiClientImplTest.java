@@ -10,6 +10,11 @@ import com.coin.facade.response.Trade;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -22,7 +27,11 @@ import java.util.Set;
  * @Created by shiyawei
  */
 @Slf4j
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest
+@WebAppConfiguration
 public class BitColaApiClientImplTest {
+    @Autowired
     private ApiFacade client;
 
     @Before
@@ -32,7 +41,7 @@ public class BitColaApiClientImplTest {
         props.load(is);
         apiKey = props.getProperty("apiKey");
         apiSecret = props.getProperty("apiSecret");*/
-        client = new BitColaApiFacadeImpl();
+        //client = new BitColaApiFacadeImpl();
     }
 
     /**
