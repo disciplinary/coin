@@ -1,4 +1,4 @@
-package com.coin.scheduler;
+package com.coin.exchange;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
