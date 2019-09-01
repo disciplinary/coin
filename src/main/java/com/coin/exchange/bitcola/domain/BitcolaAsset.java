@@ -14,9 +14,9 @@ import java.math.BigDecimal;
 public class BitcolaAsset {
     @JsonProperty("coinCode")
     private String currency;
-    private BigDecimal balance;
-    private BigDecimal available;
-    private BigDecimal frozen;
-    private int unitDecimal;
+    private double balance;
+    private double available;
+    private double frozen;
+    private double unitDecimal;
 
 }

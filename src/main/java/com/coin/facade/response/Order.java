@@ -11,10 +11,10 @@ public class Order {
     private long id;
     private String pair;
     private OrderDirection direction;
-    private BigDecimal price;
-    private BigDecimal amount;
-    private BigDecimal remain;
+    private double price;
+    private double amount;
+    private double remain;
     private OrderStatus status;
     private String type;
-    private BigDecimal timestamp;
+    private long timestamp;
 }

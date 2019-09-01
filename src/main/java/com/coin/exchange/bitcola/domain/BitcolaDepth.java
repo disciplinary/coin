@@ -12,6 +12,6 @@ import java.util.List;
 @Getter
 @Setter
 public class BitcolaDepth {
-    private List<List<BigDecimal>> bids;
-    private List<List<BigDecimal>> asks;
+    private List<List<Double>> bids;
+    private List<List<Double>> asks;
 }

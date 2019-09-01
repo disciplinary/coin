@@ -11,8 +11,8 @@ import java.math.BigDecimal;
 @Data
 public class Trade {
     private String id;
-    private BigDecimal price;
-    private BigDecimal amount;
+    private double price;
+    private double amount;
     private OrderDirection direction;
     private long timestamp;
 }

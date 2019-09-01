@@ -12,9 +12,9 @@ import java.math.BigDecimal;
 public class Asset {
     @JsonProperty("coinCode")
     private String currency;
-    private BigDecimal balance;
-    private BigDecimal available;
-    private BigDecimal frozen;
+    private double balance;
+    private double available;
+    private double frozen;
     private int unitDecimal;
 
 }
