@@ -32,7 +32,7 @@ public enum OrderStatus {
                 return c;
             }
         }
-        return null;
+        return UNKNOWN_TYPE;
     }
 
 }
