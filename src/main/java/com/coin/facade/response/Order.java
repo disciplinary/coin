@@ -1,7 +1,7 @@
 package com.coin.facade.response;
 
-import com.coin.exchange.bitcola.domain.enums.OrderDirection;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.coin.facade.enums.OrderDirection;
+import com.coin.facade.enums.OrderStatus;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -12,10 +12,9 @@ public class Order {
     private String pair;
     private OrderDirection direction;
     private BigDecimal price;
-    @JsonProperty("number")
-    private double amount;
+    private BigDecimal amount;
     private BigDecimal remain;
-    private String status;
+    private OrderStatus status;
     private String type;
     private BigDecimal timestamp;
 }

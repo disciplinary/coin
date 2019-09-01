@@ -1,4 +1,4 @@
-package com.coin.exchange.fcoin.domain.enums;
+package com.coin.facade.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

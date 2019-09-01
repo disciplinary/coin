@@ -1,20 +1,19 @@
 package com.coin.exchange.bitcola;
 
-import com.coin.exchange.bitcola.domain.BitcolaDepth;
-import com.coin.exchange.bitcola.domain.BitcolaPair;
-import com.coin.exchange.fcoin.domain.reqs.PlaceOrderRequest;
+import com.coin.exchange.Convers;
+import com.coin.exchange.bitcola.domain.*;
+import com.coin.exchange.bitcola.domain.resp.RespBody;
+import com.coin.exchange.fcoin.domain.enums.DepthLevel;
 import com.coin.facade.ApiFacade;
 
 import com.coin.facade.request.PlaceOrder;
-import com.coin.facade.response.Depth;
-import com.coin.facade.response.Pair;
-import com.coin.facade.response.Ticker;
-import com.coin.facade.response.Trade;
-import org.springframework.beans.BeanUtils;
+import com.coin.facade.response.*;
 import org.springframework.stereotype.Service;
+import retrofit2.Call;
+import retrofit2.http.Query;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -39,9 +38,7 @@ public class BitColaApiFacadeImpl implements ApiFacade {
     @Override
     public Set<Pair> pairs() {
         Set<BitcolaPair> bitcolaPair= bitColaApiFacadeGenerator.executeSync(service.pairs()).getData();
-        Set<Pair> pair = new HashSet<Pair>();
-        BeanUtils.copyProperties(bitcolaPair,pair);
-        return pair;
+        return Convers.copySet(bitcolaPair,Pair.class);
     }
 
     @Override
@@ -49,45 +46,46 @@ public class BitColaApiFacadeImpl implements ApiFacade {
         return null;
     }
 
-    /* @Override
-   public Depth depth(DepthLevel level, String pair) {
-
-        BitcolaDepth bitcolaDepth= bitColaApiFacadeGenerator.executeSync(service.depth(pair ,0,0)).getData();
-        Depth depth = new Depth();
-        BeanUtils.copyProperties(bitcolaDepth,depth);
-        return depth;
-
-    }*/
-
-    @Override
-   public Set<Trade> trades(String pair, String status, String direction, String type, int page) {
-         bitColaApiFacadeGenerator.executeSync(service.getOrders(pair,status,direction,type,page)).getData();
-        return  null;
+     @Override
+   public Depth depth(String pair) {
+        BitcolaDepth bitcolaDepth= bitColaApiFacadeGenerator.executeSync(service.depth(pair ,"100","")).getData();
+         return  Convers.convert(bitcolaDepth,Depth.class);
     }
 
     @Override
-    public String buy(PlaceOrder placeOrder) {
-
-        return null;
+   public List<Trade> trades(String pair, int page) {
+        List<BitcolaTrade>  bitcolaTradeList= bitColaApiFacadeGenerator.executeSync(service.getTrades(pair,String.valueOf(page))).getData();
+        return Convers.copyList(bitcolaTradeList,Trade.class);
     }
 
     @Override
-    public String sell(PlaceOrder placeOrder) {
-        return null;
+    public String placeOrder(PlaceOrder placeOrder) {
+        String  price= placeOrder.getPrice().stripTrailingZeros().toPlainString();
+        String amount=placeOrder.getAmount().stripTrailingZeros().toPlainString();
+        return bitColaApiFacadeGenerator.executeSync(service.placeOrder(placeOrder.getPair(),placeOrder.getType(), placeOrder.getDirection().name(),price,amount)).getData();
+
     }
 
     @Override
-    public String cancelOrder() {
-        return null;
+    public String cancelOrder(String id) {
+        return bitColaApiFacadeGenerator.executeSync(service.cancelOrder(id)).getData();
     }
 
     @Override
-    public String getOrder(String id) {
-        return null;
+    public Order getOrder(String id) {
+        BicolaOrder bicolaOrder= bitColaApiFacadeGenerator.executeSync(service.getOrder(id)).getData();
+        return Convers.convert(bicolaOrder,Order.class);
     }
 
     @Override
-    public String getAccountInfo() {
-        return null;
+    public List<Order> getOrders(String pair, String status,String direction, String type, Integer page) {
+        List<BicolaOrder> bicolaOrderList= bitColaApiFacadeGenerator.executeSync(service.getOrders(pair,status,direction,type,String.valueOf(page))).getData();
+        return Convers.copyList(bicolaOrderList,Order.class);
+    }
+
+    @Override
+    public List<Asset> getAccountInfo() {
+        List<BitcolaAsset> assetList= bitColaApiFacadeGenerator.executeSync(service.getAccount()).getData();
+        return Convers.copyList(assetList,Asset.class);
     }
 }

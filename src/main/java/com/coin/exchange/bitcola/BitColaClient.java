@@ -45,7 +45,7 @@ public interface BitColaClient {
      * @return
      */
 
-    Call<RespBody<BitcolaDepth>> depth(String pair, int size, int merge);
+    Call<RespBody<BitcolaDepth>> depth(@Query("pair")String pair, @Query("size")String size, @Query("merge")String merge);
 
     /**
      * 查询历史交易记录
@@ -54,7 +54,7 @@ public interface BitColaClient {
      * @return
      */
     @GET("/api/market/trades")
-    Call<RespBody<BitcolaTrade>>  getTrades(String pair, int size);
+    Call<RespBody<List<BitcolaTrade>>>  getTrades(@Query("pair")String pair, @Query("size")String size);
 
 
     /**
@@ -76,7 +76,7 @@ public interface BitColaClient {
      */
     @Headers(Consts.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
     @GET("/api/trade/order")
-    Call<RespBody<String>>  placeOrder(String pair, String type, String direction, BigDecimal price, BigDecimal amount);
+    Call<RespBody<String>>  placeOrder(@Query("pair")String pair, @Query("type")String type, @Query("direction")String direction, @Query("price")String price, @Query("amount")String amount);
 
     /**
      * 根据id撤销订单
@@ -85,7 +85,7 @@ public interface BitColaClient {
      */
     @Headers(Consts.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
     @GET("/api/trade/cancelOrder")
-    Call<RespBody<String>> cancelOrder(String id);
+    Call<RespBody<String>> cancelOrder(@Query("id")String id);
 
     /**
      * 根据id查询订单
@@ -94,11 +94,11 @@ public interface BitColaClient {
      */
     @Headers(Consts.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
     @GET("/api/trade/getOrder")
-    Call<RespBody<Set<BicolaOrder>>> getOrder(String id);
+    Call<RespBody<BicolaOrder>> getOrder(@Query("id")String id);
 
     /**
      * 查询订单
-     * @param symbol
+     * @param pair
      * @param status
      * @param direction
      * @param type
@@ -107,6 +107,6 @@ public interface BitColaClient {
      */
     @Headers(Consts.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
     @GET("api/trade/getOrders")
-    Call<RespBody<List<BicolaOrder>>> getOrders(@Query("pair")String symbol, @Query("status")String status, @Query("direction")String direction, @Query("type")String type, @Query("page")  Integer page);
+    Call<RespBody<List<BicolaOrder>>> getOrders(@Query("pair")String pair,@Query("status")String status,@Query("direction")String direction, @Query("type")String type,@Query("page")String page);
 
 }

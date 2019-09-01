@@ -1,12 +1,10 @@
 package com.coin.facade;
 
+import com.coin.exchange.bitcola.domain.BitcolaTrade;
 import com.coin.facade.request.PlaceOrder;
-import com.coin.facade.response.Depth;
-import com.coin.facade.response.Pair;
-import com.coin.facade.response.Ticker;
-import com.coin.facade.response.Trade;
+import com.coin.facade.response.*;
 
-import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -33,14 +31,14 @@ public interface ApiFacade {
      *
      * @return
      */
-    Ticker ticker(String symbol);
+    Ticker ticker(String pair);
 
     /**
      * 获取交易所获取深度
      *
      * @return
      */
-   //Depth depth(DepthLevel level, String symbol);
+   Depth depth(String pair);
 
     /**
      * 获取交易所交易历史
@@ -50,53 +48,48 @@ public interface ApiFacade {
 
 
     /**
-     * 最新成交
+     * 最新成交记录
      *
-     * @param symbol
-     * @param before
-     * @param limit
+     * @param pair
+     * @param page
      * @return
      */
-    Set<Trade> trades(String pair, String status, String direction, String type, int page);
-
+    public List<Trade> trades(String pair, int page);
 
     /**
-     * 买入下单
+     * ,下单
      * @param placeOrder 订单信息
      * @return 订单 ID
      */
-
-    String buy(PlaceOrder placeOrder);
-
-    /**
-     * ,卖出下单
-     * @param placeOrder 订单信息
-     * @return 订单 ID
-     */
-    String sell(PlaceOrder placeOrder);
+    String placeOrder(PlaceOrder placeOrder);
     /**
      * 取消委托
      * @return
      */
-    String cancelOrder();
+    String cancelOrder(String id);
     /**
      * 获取订单
      *
      * @return
      */
-    String getOrder(String id);
+    Order getOrder(String id);
 
     /**
      * 获取订单列表
-     * @param symbol
-     * @param side
+     * @param pair
+     * @param status
      * @param type
-     * @param price
-     * @param amount
+     * @param direction
+     * @param type
+     * @param page
      * @return
      */
+
+    public List<Order> getOrders(String pair, String status,String direction, String type, Integer page);
+
+
     /**
      * 获取账户信息
      */
-   String getAccountInfo();
+    public List<Asset> getAccountInfo();
 }

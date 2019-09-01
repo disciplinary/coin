@@ -1,6 +1,5 @@
 package com.coin.exchange.bitcola.domain;
 
-import com.coin.exchange.bitcola.domain.enums.OrderDirection;
 import com.coin.exchange.fcoin.domain.enums.OrderSide;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -14,6 +13,6 @@ public class BitcolaTrade {
     private double price;
     @JsonProperty("number")
     private double amount;
-    private OrderDirection direction;
+    private String direction;
     private long timestamp;
 }
